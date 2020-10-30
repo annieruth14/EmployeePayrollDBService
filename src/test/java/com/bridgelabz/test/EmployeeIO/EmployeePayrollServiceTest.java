@@ -52,8 +52,13 @@ public class EmployeePayrollServiceTest {
 	
 	@Test 
 	public void givenDateRange_shouldReturnEmployee() throws EmployeePayrollException {
-		List<EmployeePayroll> list = employeePayrollService.readData(IOService.DB_IO);
 		List<EmployeePayroll> list1 = employeePayrollService.getEmployeeInDateRange("2020-01-13", "2020-06-13");
 		Assert.assertEquals(2, list1.size());
+	}
+	
+	@Test  
+	public void givenSalary_whenFindSum_shouldReturnSum() throws EmployeePayrollException {
+		double salary = employeePayrollService.getSumByGender("F");
+		Assert.assertEquals(12000, salary, 0);
 	}
 }
