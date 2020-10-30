@@ -86,11 +86,13 @@ public class EmployeePayrollDBService {
 				String name = resultSet.getString("name");
 				double salary = resultSet.getDouble("basic_pay");
 				LocalDate startDate = resultSet.getDate("start").toLocalDate();
-				list.add(new EmployeePayroll(id, name, salary, startDate));
+				String gender = resultSet.getString("gender");
+				list.add(new EmployeePayroll(id, name, salary, startDate, gender));
 			}
 		}
 		catch (SQLException e) {
-			throw new EmployeePayrollException(e.getMessage(), EmployeePayrollException.ExceptionType.SQL_EXCEPTION);
+			e.printStackTrace();
+			//throw new EmployeePayrollException(e.getMessage(), EmployeePayrollException.ExceptionType.SQL_EXCEPTION);
 		}
 		return list;
 	}
@@ -121,5 +123,24 @@ public class EmployeePayrollDBService {
 			throw new EmployeePayrollException(e.getMessage(), EmployeePayrollException.ExceptionType.SQL_EXCEPTION);
 		}
 		return list;
+	}
+
+	public double getSumByGender(String gender) throws EmployeePayrollException {
+		String sql = "select sum(basic_pay) as pay from employee_payroll where gender = ? group by gender";
+		double result = 0;
+		try {
+			Connection connection = getConnection();
+			employeePayrollDataStatement = connection.prepareStatement(sql);
+			employeePayrollDataStatement.setString(1,  gender);
+			ResultSet resultSet = employeePayrollDataStatement.executeQuery();
+			while(resultSet.next()) {
+				result = resultSet.getDouble("pay");
+				//System.out.println(pay);
+			}
+		}
+		catch(SQLException e) {
+			throw new EmployeePayrollException(e.getMessage(), EmployeePayrollException.ExceptionType.SQL_EXCEPTION);
+		}
+		return result;
 	}
 }

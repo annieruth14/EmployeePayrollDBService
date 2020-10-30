@@ -97,8 +97,6 @@ public class EmployeePayrollService {
 
 	public boolean checkEmployeePayrollInSync(String name) throws EmployeePayrollException {
 		List<EmployeePayroll> list = employeePayrollDBService.getEmployeePayrollData(name);
-		System.out.println(list.get(0).getName());
-		System.out.println(getEmployeePayrollData(name));
 		return list.get(0).equals(getEmployeePayrollData(name)); 
 	}
 
@@ -107,6 +105,10 @@ public class EmployeePayrollService {
 		Date end = Date.valueOf(endDate);
 		employeePayrollList = employeePayrollDBService.getEmployeeWithinDateRange(start, end);
 		return employeePayrollList;
+	}
+
+	public double getSumByGender(String gender) throws EmployeePayrollException {
+		return employeePayrollDBService.getSumByGender(gender);
 	}
 
 }

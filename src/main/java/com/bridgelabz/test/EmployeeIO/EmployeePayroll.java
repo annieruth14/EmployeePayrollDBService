@@ -8,6 +8,7 @@ public class EmployeePayroll {
 	private String name;
 	private double salary;
 	private LocalDate startDate;
+	private String gender;
 	
 	public EmployeePayroll(int id, String name, double salary) {
 		super();
@@ -16,9 +17,10 @@ public class EmployeePayroll {
 		this.salary = salary;
 	}
 	
-	public EmployeePayroll(int id, String name, double salary, LocalDate startDate) {
+	public EmployeePayroll(int id, String name, double salary, LocalDate startDate, String gender) {
 		this(id, name, salary);
 		this.startDate = startDate;
+		this.gender = gender;
 	}
 
 	public int getId() {
