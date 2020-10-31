@@ -1,6 +1,7 @@
 package com.bridgelabz.test.EmployeeIO;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -109,6 +110,10 @@ public class EmployeePayrollService {
 
 	public double getSumByGender(String gender) throws EmployeePayrollException {
 		return employeePayrollDBService.getSumByGender(gender);
+	}
+
+	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender) throws SQLException {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender));
 	}
 
 }
