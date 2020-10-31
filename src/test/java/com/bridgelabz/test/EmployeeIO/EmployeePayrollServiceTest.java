@@ -1,4 +1,6 @@
 package com.bridgelabz.test.EmployeeIO;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -60,5 +62,13 @@ public class EmployeePayrollServiceTest {
 	public void givenSalary_whenFindSum_shouldReturnSum() throws EmployeePayrollException {
 		double salary = employeePayrollService.getSumByGender("F");
 		Assert.assertEquals(12000, salary, 0);
+	}
+	
+	@Test
+	public void givenNewEmployee_whenAdded_shouldBeSyncWithDB() throws EmployeePayrollException, SQLException {
+		employeePayrollService.readData(IOService.DB_IO);
+		employeePayrollService.addEmployeeToPayroll("Mark",5000, LocalDate.now(), "M");
+		boolean result = employeePayrollService.checkEmployeePayrollInSync("Mark");
+		Assert.assertTrue(result);
 	}
 }
