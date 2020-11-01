@@ -261,4 +261,14 @@ public class EmployeePayrollDBService {
 		}
 		return employeePayroll;
 	}
+
+	public int deleteEmployee(String name, boolean isActive) throws EmployeePayrollException {
+		String sql = String.format("update employee_payroll set is_active =  %s where name = '%s';", isActive, name);
+		try (Connection connection = this.getConnection()) {
+			Statement statement = connection.createStatement();
+			return statement.executeUpdate(sql);
+		} catch (SQLException e) {
+			throw new EmployeePayrollException(e.getMessage(), EmployeePayrollException.ExceptionType.SQL_EXCEPTION);
+		}
+	}
 }

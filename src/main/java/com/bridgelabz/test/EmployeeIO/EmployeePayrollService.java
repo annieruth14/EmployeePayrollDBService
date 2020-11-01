@@ -1,6 +1,7 @@
 package com.bridgelabz.test.EmployeeIO;
 
 import java.sql.Date;
+import java.util.Iterator;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -114,6 +115,20 @@ public class EmployeePayrollService {
 
 	public void addEmployeeToPayroll(String name, double salary, LocalDate startDate, String gender, int companyId, ArrayList<String> departmentList, String companyName) throws EmployeePayrollException {
 		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, startDate, gender, companyId, departmentList, companyName));
+	}
+
+	public List<EmployeePayroll> deleteEmployee(String name, boolean isActive) throws EmployeePayrollException {
+		int update = employeePayrollDBService.deleteEmployee(name, isActive);
+		if(update == 1) {
+			Iterator<EmployeePayroll> itr = employeePayrollList.iterator();
+			while(itr.hasNext()) {
+				EmployeePayroll employee = itr.next();
+				if(employee.getName().equals(name)) {
+					itr.remove();
+				}
+			}
+		}
+		return employeePayrollList;
 	}
 
 }
