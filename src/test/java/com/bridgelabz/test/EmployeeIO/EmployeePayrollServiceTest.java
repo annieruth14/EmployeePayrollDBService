@@ -75,4 +75,11 @@ public class EmployeePayrollServiceTest {
 		boolean result = employeePayrollService.checkEmployeePayrollInSync("Sanket");
 		Assert.assertTrue(result);
 	}
+	
+	@Test
+	public void givenEmployee_whenDeleted_shouldBeRemovedFromEmployeeList() throws EmployeePayrollException {
+		employeePayrollService.readData(IOService.DB_IO);
+		List<EmployeePayroll> list = employeePayrollService.deleteEmployee("Kiran",false);
+		Assert.assertEquals(4, list.size());
+	}
 }
